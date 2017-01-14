@@ -6482,10 +6482,10 @@
 
 	var fetchWord = exports.fetchWord = function fetchWord() {
 	  return function (dispatch, getState) {
-	    dispatch(setWord('parrot'));
-	    //fetch word from API
-	    //.then(word => dispatch(setWord(word)))
-	    //might be res.data
+	    //dispatch(setWord('parrot'))
+	    _axios2.default.get('http://randomword.setgetgo.com/get.php').then(function (word) {
+	      console.log(word);
+	    });
 	  };
 	};
 

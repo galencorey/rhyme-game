@@ -7,9 +7,11 @@ export const setWord = (word) => {
 
 export const fetchWord = () => {
   return function(dispatch, getState){
-    dispatch(setWord('parrot'))
-     //fetch word from API
-     //.then(word => dispatch(setWord(word)))
-     //might be res.data
+    //dispatch(setWord('parrot'))
+     axios.get('http://randomword.setgetgo.com/get.php')
+     .then(word => {
+        console.log(word)
+     })
+
   }
 }
