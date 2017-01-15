@@ -8,3 +8,18 @@ export const centeredDiv = {
   textAlign: "center",
   paddingTop: 15
 }
+
+export const padding = {
+  textAlign: 'left',
+  paddingBottom: 10
+}
+
+export const inline = {
+  display: 'inline-block',
+  marginTop: 10,
+  marginLeft: 5
+}
+
+export const lightBlue = {
+  backgroundColor: '#B2EBF2'
+}
