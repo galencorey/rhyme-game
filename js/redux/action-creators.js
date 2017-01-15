@@ -19,7 +19,11 @@ export const fetchWord = () => {
         return axios.get(`https://wordsapiv1.p.mashape.com/words/${response.data.word}/rhymes`, options)
      })
      .then(response => {
-      console.log("RHYMES", response.data.rhymes.all)
+        let rhymes = [];
+        for (let type in response.data.rhymes){
+          rhymes = [...rhymes, ...response.data.rhymes[type]];
+        }
+        console.log("RHYMES", rhymes)
      })
      .catch(err => console.log(err))
   }

@@ -1,10 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {fetchWord} from '../../redux/action-creators';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const RandomWord = ({fetchWord, word}) => {
   return(<div>
-          <button onClick={fetchWord}>Play</button>
+          <RaisedButton label="Play" primary={true} onClick={fetchWord} />
           <p>{word}</p>
         </div>)
 }
