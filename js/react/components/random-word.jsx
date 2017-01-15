@@ -1,11 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {fetchWord} from '../../redux/action-creators';
+import RaisedButton from 'material-ui/RaisedButton';
+import {textStyles, centeredDiv} from '../styles';
 
 const RandomWord = ({fetchWord, word}) => {
-  return(<div>
-          <button onClick={fetchWord}>Play</button>
-          <p>{word}</p>
+  return(<div style={centeredDiv}>
+          { word? null: <h2 style={textStyles}>Are you a rhyme master?</h2>}
+          <RaisedButton label={word? "New Word": "Play"} primary={true} onClick={fetchWord} />
+          <h3 style={textStyles}>{word}</h3>
         </div>)
 }
 
