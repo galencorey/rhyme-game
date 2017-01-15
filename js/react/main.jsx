@@ -5,7 +5,6 @@ export default class Main extends Component {
   render(){
     return (
       <div>
-        <h1>The React is still Rendering!!!</h1>
         <RandomWordContainer />
       </div>
     )

@@ -24,8 +24,3 @@ export const fetchWord = () => {
      .catch(err => console.log(err))
   }
 }
-
-
-/*
-curl --get --include 'https://wordsapiv1.p.mashape.com/words/?random=true'   -H 'X-Mashape-Key: 7Mbjb7T3qxmshMvwCdK99wp9AEjVp1OsNPWjsnjZdtE6RqhqCT'   -H 'Accept: application/json'
-*/
