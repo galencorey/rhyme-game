@@ -6464,7 +6464,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	   value: true
 	});
 	exports.fetchWord = exports.setWord = undefined;
 
@@ -6474,20 +6474,35 @@
 
 	var _axios2 = _interopRequireDefault(_axios);
 
+	var _keys = __webpack_require__(254);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var setWord = exports.setWord = function setWord(word) {
-	  return { type: _constants.NEW_WORD, word: word };
+	   return { type: _constants.NEW_WORD, word: word };
 	};
 
 	var fetchWord = exports.fetchWord = function fetchWord() {
-	  return function (dispatch, getState) {
-	    //dispatch(setWord('parrot'))
-	    _axios2.default.get('http://randomword.setgetgo.com/get.php').then(function (word) {
-	      console.log(word);
-	    });
-	  };
+	   var options = { headers: {
+	         'X-Mashape-Key': _keys.wordsAPIKey,
+	         'Accept': 'application/json'
+	      } };
+
+	   return function (dispatch, getState) {
+	      return _axios2.default.get('https://wordsapiv1.p.mashape.com/words/?random=true&soundsMax=4', options).then(function (response) {
+	         dispatch(setWord(response.data.word));
+	         return _axios2.default.get('https://wordsapiv1.p.mashape.com/words/' + response.data.word + '/rhymes', options);
+	      }).then(function (response) {
+	         console.log("RHYMES", response.data.rhymes.all);
+	      }).catch(function (err) {
+	         return console.log(err);
+	      });
+	   };
 	};
+
+	/*
+	curl --get --include 'https://wordsapiv1.p.mashape.com/words/?random=true'   -H 'X-Mashape-Key: 7Mbjb7T3qxmshMvwCdK99wp9AEjVp1OsNPWjsnjZdtE6RqhqCT'   -H 'Accept: application/json'
+	*/
 
 /***/ },
 /* 73 */
@@ -25420,7 +25435,7 @@
 
 	   switch (action.type) {
 	      case _constants.NEW_WORD:
-	         return Object.assign({}, state, { word: 'parrot' });
+	         return Object.assign({}, state, { word: action.word });
 	      default:
 	         return state;
 	   }
@@ -26314,6 +26329,17 @@
 	  transformer: undefined
 	};
 	module.exports = exports['default'];
+
+/***/ },
+/* 254 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var wordsAPIKey = exports.wordsAPIKey = '7Mbjb7T3qxmshMvwCdK99wp9AEjVp1OsNPWjsnjZdtE6RqhqCT';
 
 /***/ }
 /******/ ]);

@@ -5,7 +5,7 @@ const initialState = {word: ''};
 const reducer = (state = initialState, action) => {
   switch (action.type) {
   case NEW_WORD:
-     return Object.assign({}, state, { word: 'parrot' });
+     return Object.assign({}, state, { word: action.word });
   default:
      return state;
   }

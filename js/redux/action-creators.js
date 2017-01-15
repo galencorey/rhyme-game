@@ -1,17 +1,31 @@
 import {NEW_WORD} from './constants';
 import axios from 'axios';
+import { wordsAPIKey } from '../../keys';
 
 export const setWord = (word) => {
   return {type: NEW_WORD, word};
 }
 
 export const fetchWord = () => {
-  return function(dispatch, getState){
-    //dispatch(setWord('parrot'))
-     axios.get('http://randomword.setgetgo.com/get.php')
-     .then(word => {
-        console.log(word)
-     })
+  const options = {headers: {
+      'X-Mashape-Key': wordsAPIKey,
+      'Accept': 'application/json'
+  }}
 
+  return function(dispatch, getState){
+     return axios.get('https://wordsapiv1.p.mashape.com/words/?random=true&soundsMax=4', options)
+     .then(response => {
+        dispatch(setWord(response.data.word))
+        return axios.get(`https://wordsapiv1.p.mashape.com/words/${response.data.word}/rhymes`, options)
+     })
+     .then(response => {
+      console.log("RHYMES", response.data.rhymes.all)
+     })
+     .catch(err => console.log(err))
   }
 }
+
+
+/*
+curl --get --include 'https://wordsapiv1.p.mashape.com/words/?random=true'   -H 'X-Mashape-Key: 7Mbjb7T3qxmshMvwCdK99wp9AEjVp1OsNPWjsnjZdtE6RqhqCT'   -H 'Accept: application/json'
+*/
