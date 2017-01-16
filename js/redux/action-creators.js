@@ -1,4 +1,4 @@
-import {NEW_WORD, ADD_GUESS} from './constants';
+import {NEW_WORD, ADD_GUESS, SEE_ANSWERS} from './constants';
 import axios from 'axios';
 import { wordsAPIKey } from '../../keys';
 
@@ -8,6 +8,10 @@ export const setWord = (word, rhymes) => {
 
 export const addGuess = (guess) => {
   return {type: ADD_GUESS, guess}
+}
+
+export const seeAnswers = () => {
+  return {type: SEE_ANSWERS}
 }
 
 export const fetchWord = () => {

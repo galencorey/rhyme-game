@@ -2,21 +2,36 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Card, CardHeader} from 'material-ui/Card';
 import Chip from 'material-ui/Chip';
-import {centeredDiv, padding, inline, lightBlue} from '../styles';
+import RaisedButton from 'material-ui/RaisedButton';
+import {centeredDiv, padding, inline, lightBlue, loneButton, pinkInline} from '../styles';
+import {seeAnswers} from '../../redux/action-creators'
 
-const GuessCard = ({rhymes, guesses}) => {
+const GuessCard = ({rhymes, guesses, answers, seeAnswers}) => {
+
   return (
           <div style={centeredDiv}>
+          <div style={loneButton}>
+          <RaisedButton label="see all" secondary={true} onClick={seeAnswers} />
+          </div>
            <Card style={padding}>
-              <CardHeader title={`You have found ${guesses.length}/${rhymes.length} rhymes`} style={lightBlue} />
+              <CardHeader
+              title={`You have found ${guesses.length}/${rhymes.length} rhymes`}
+              style={lightBlue}/>
               {guesses.map((guess, i)=>{
                 return <Chip style={inline} key={i}>{guess}</Chip>
               })}
+              {seeAnswers ?
+                answers.map((word, i) => {
+                  return <Chip style={pinkInline} key={i}>{word}</Chip>
+                })
+                : null
+              }
+
             </Card>
           </div>)
 }
 
-const mapStateToProps = (state) => ({rhymes: state.rhymes, guesses: state.guesses, newestGuess: state.newestGuess});
-const mapDispatchToProps = () => ({});
+const mapStateToProps = (state) => ({rhymes: state.rhymes, guesses: state.guesses, newestGuess: state.newestGuess, answers: state.answers});
+const mapDispatchToProps = {seeAnswers};
 
 export default connect(mapStateToProps, mapDispatchToProps)(GuessCard);

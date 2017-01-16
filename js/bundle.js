@@ -23884,30 +23884,35 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 
 	var _constants = __webpack_require__(220);
 
-	var initialState = { word: '', guesses: [], rhymes: [], newestGuess: '' };
+	var initialState = { word: '', guesses: [], rhymes: [], newestGuess: '', showAnswers: false, answers: [] };
 
 	var reducer = function reducer() {
-	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-	  var action = arguments[1];
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+	    var action = arguments[1];
 
-	  switch (action.type) {
-	    case _constants.NEW_WORD:
-	      return Object.assign({}, state, { word: action.word, rhymes: action.rhymes, guesses: [] });
-	    case _constants.ADD_GUESS:
-	      console.log("STATE.GUESSES", state.guesses);
-	      var totalGuesses = state.guesses;
-	      if (state.rhymes.includes(action.guess)) {
-	        totalGuesses.push(action.guess);
-	      }
-	      return Object.assign({}, state, { guesses: totalGuesses, newestGuess: action.guess });
-	    default:
-	      return state;
-	  }
+	    switch (action.type) {
+	        case _constants.NEW_WORD:
+	            return Object.assign({}, state, { word: action.word, rhymes: action.rhymes, guesses: [], showAnswers: false });
+	        case _constants.ADD_GUESS:
+	            console.log("STATE.GUESSES", state.guesses);
+	            var totalGuesses = state.guesses;
+	            if (state.rhymes.includes(action.guess)) {
+	                totalGuesses.push(action.guess);
+	            }
+	            return Object.assign({}, state, { guesses: totalGuesses, newestGuess: action.guess });
+	        case _constants.SEE_ANSWERS:
+	            var answers = state.rhymes.filter(function (rhyme) {
+	                return !state.guesses.includes(rhyme);
+	            });
+	            return Object.assign({}, state, { showAnswers: true, answers: answers });
+	        default:
+	            return state;
+	    }
 	};
 	exports.default = reducer;
 
@@ -23922,6 +23927,7 @@
 	});
 	var NEW_WORD = exports.NEW_WORD = 'NEW_WORD';
 	var ADD_GUESS = exports.ADD_GUESS = 'ADD_GUESS';
+	var SEE_ANSWERS = exports.SEE_ANSWERS = 'SEE_ANSWERS';
 
 /***/ },
 /* 221 */
@@ -24819,7 +24825,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.fetchWord = exports.addGuess = exports.setWord = undefined;
+	exports.fetchWord = exports.seeAnswers = exports.addGuess = exports.setWord = undefined;
 
 	var _constants = __webpack_require__(220);
 
@@ -24839,6 +24845,10 @@
 
 	var addGuess = exports.addGuess = function addGuess(guess) {
 	  return { type: _constants.ADD_GUESS, guess: guess };
+	};
+
+	var seeAnswers = exports.seeAnswers = function seeAnswers() {
+	  return { type: _constants.SEE_ANSWERS };
 	};
 
 	var fetchWord = exports.fetchWord = function fetchWord() {
@@ -37385,8 +37395,20 @@
 	  marginLeft: 5
 	};
 
+	var pinkInline = exports.pinkInline = {
+	  display: 'inline-block',
+	  marginTop: 10,
+	  marginLeft: 5,
+	  backgroundColor: '#F48FB1'
+	};
+
 	var lightBlue = exports.lightBlue = {
 	  backgroundColor: '#B2EBF2'
+	};
+
+	var loneButton = exports.loneButton = {
+	  marginBottom: 10,
+	  textAlign: 'right'
 	};
 
 /***/ },
@@ -38973,38 +38995,59 @@
 
 	var _Chip2 = _interopRequireDefault(_Chip);
 
+	var _RaisedButton = __webpack_require__(403);
+
+	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
 	var _styles = __webpack_require__(441);
+
+	var _actionCreators = __webpack_require__(228);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var GuessCard = function GuessCard(_ref) {
 	  var rhymes = _ref.rhymes,
-	      guesses = _ref.guesses;
+	      guesses = _ref.guesses,
+	      answers = _ref.answers,
+	      seeAnswers = _ref.seeAnswers;
+
 
 	  return _react2.default.createElement(
 	    'div',
 	    { style: _styles.centeredDiv },
 	    _react2.default.createElement(
+	      'div',
+	      { style: _styles.loneButton },
+	      _react2.default.createElement(_RaisedButton2.default, { label: 'see all', secondary: true, onClick: seeAnswers })
+	    ),
+	    _react2.default.createElement(
 	      _Card.Card,
 	      { style: _styles.padding },
-	      _react2.default.createElement(_Card.CardHeader, { title: 'You have found ' + guesses.length + '/' + rhymes.length + ' rhymes', style: _styles.lightBlue }),
+	      _react2.default.createElement(_Card.CardHeader, {
+	        title: 'You have found ' + guesses.length + '/' + rhymes.length + ' rhymes',
+	        style: _styles.lightBlue }),
 	      guesses.map(function (guess, i) {
 	        return _react2.default.createElement(
 	          _Chip2.default,
 	          { style: _styles.inline, key: i },
 	          guess
 	        );
-	      })
+	      }),
+	      seeAnswers ? answers.map(function (word, i) {
+	        return _react2.default.createElement(
+	          _Chip2.default,
+	          { style: _styles.pinkInline, key: i },
+	          word
+	        );
+	      }) : null
 	    )
 	  );
 	};
 
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { rhymes: state.rhymes, guesses: state.guesses, newestGuess: state.newestGuess };
+	  return { rhymes: state.rhymes, guesses: state.guesses, newestGuess: state.newestGuess, answers: state.answers };
 	};
-	var mapDispatchToProps = function mapDispatchToProps() {
-	  return {};
-	};
+	var mapDispatchToProps = { seeAnswers: _actionCreators.seeAnswers };
 
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(GuessCard);
 
