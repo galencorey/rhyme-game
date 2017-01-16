@@ -13,7 +13,7 @@ const RandomWord = ({fetchWord, word}) => {
 }
 
 const mapStateToProps = (state) => ({word: state.word});
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = {fetchWord};
 
 // export RandomWord;
-export default connect(mapStateToProps, {fetchWord})(RandomWord);
+export default connect(mapStateToProps, mapDispatchToProps)(RandomWord);
