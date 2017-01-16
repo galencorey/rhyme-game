@@ -5,10 +5,9 @@ const initialState = {word: ''};
 const reducer = (state = initialState, action) => {
   switch (action.type) {
   case NEW_WORD:
-     return Object.assign({}, state, { word: action.word });
+     return Object.assign({}, state, { word: action.word, rhymes: action.rhymes });
   default:
      return state;
   }
 }
-console.log("typeof reducer", typeof reducer);
 export default reducer;

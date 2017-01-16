@@ -23899,8 +23899,6 @@
 	   value: true
 	});
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 	var _constants = __webpack_require__(220);
 
 	var initialState = { word: '' };
@@ -23911,12 +23909,11 @@
 
 	   switch (action.type) {
 	      case _constants.NEW_WORD:
-	         return Object.assign({}, state, { word: action.word });
+	         return Object.assign({}, state, { word: action.word, rhymes: action.rhymes });
 	      default:
 	         return state;
 	   }
 	};
-	console.log("typeof reducer", typeof reducer === 'undefined' ? 'undefined' : _typeof(reducer));
 	exports.default = reducer;
 
 /***/ },
@@ -24840,8 +24837,8 @@
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-	var setWord = exports.setWord = function setWord(word) {
-	   return { type: _constants.NEW_WORD, word: word };
+	var setWord = exports.setWord = function setWord(word, rhymes) {
+	   return { type: _constants.NEW_WORD, word: word, rhymes: rhymes };
 	};
 
 	var fetchWord = exports.fetchWord = function fetchWord() {
@@ -24852,14 +24849,16 @@
 
 	   return function (dispatch, getState) {
 	      return _axios2.default.get('https://wordsapiv1.p.mashape.com/words/?random=true&soundsMax=4', options).then(function (response) {
-	         dispatch(setWord(response.data.word));
+	         //dispatch(setWord(response.data.word))
 	         return _axios2.default.get('https://wordsapiv1.p.mashape.com/words/' + response.data.word + '/rhymes', options);
 	      }).then(function (response) {
+	         console.log(response.data);
 	         var rhymes = [];
 	         for (var type in response.data.rhymes) {
 	            rhymes = [].concat(_toConsumableArray(rhymes), _toConsumableArray(response.data.rhymes[type]));
 	         }
 	         console.log("RHYMES", rhymes);
+	         dispatch(setWord(response.data.word, rhymes));
 	      }).catch(function (err) {
 	         return console.log(err);
 	      });
