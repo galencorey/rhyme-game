@@ -23901,7 +23901,7 @@
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-	var initialState = { word: '', guesses: [] };
+	var initialState = { word: '', guesses: [], rhymes: [] };
 
 	var reducer = function reducer() {
 	   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
@@ -38987,35 +38987,30 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var GuessCard = function GuessCard() {
+	var GuessCard = function GuessCard(_ref) {
+	  var rhymes = _ref.rhymes,
+	      guesses = _ref.guesses;
+
 	  return _react2.default.createElement(
 	    'div',
 	    { style: _styles.centeredDiv },
 	    _react2.default.createElement(
 	      _Card.Card,
 	      { style: _styles.padding },
-	      _react2.default.createElement(_Card.CardHeader, { title: 'You have found 1/15 rhymes', style: _styles.lightBlue }),
-	      _react2.default.createElement(
-	        _Chip2.default,
-	        { style: _styles.inline },
-	        'A Rhyme'
-	      ),
-	      _react2.default.createElement(
-	        _Chip2.default,
-	        { style: _styles.inline },
-	        'A Rhyme'
-	      ),
-	      _react2.default.createElement(
-	        _Chip2.default,
-	        { style: _styles.inline },
-	        'A Rhyme'
-	      )
+	      _react2.default.createElement(_Card.CardHeader, { title: 'You have found ' + guesses.length + '/' + rhymes.length + ' rhymes', style: _styles.lightBlue }),
+	      guesses.map(function (guess, i) {
+	        return _react2.default.createElement(
+	          _Chip2.default,
+	          { style: _styles.inline, key: i },
+	          guess
+	        );
+	      })
 	    )
 	  );
 	};
 
-	var mapStateToProps = function mapStateToProps() {
-	  return {};
+	var mapStateToProps = function mapStateToProps(state) {
+	  return { rhymes: state.rhymes, guesses: state.guesses };
 	};
 	var mapDispatchToProps = function mapDispatchToProps() {
 	  return {};

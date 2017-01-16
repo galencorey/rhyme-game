@@ -1,6 +1,6 @@
 import {NEW_WORD, ADD_GUESS} from './constants';
 
-const initialState = {word: '', guesses: []};
+const initialState = {word: '', guesses: [], rhymes: []};
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
