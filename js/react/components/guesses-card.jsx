@@ -13,11 +13,10 @@ const GuessCard = ({rhymes, guesses}) => {
                 return <Chip style={inline} key={i}>{guess}</Chip>
               })}
             </Card>
-          </div>
-          )
+          </div>)
 }
 
-const mapStateToProps = (state) => ({rhymes: state.rhymes, guesses: state.guesses});
+const mapStateToProps = (state) => ({rhymes: state.rhymes, guesses: state.guesses, newestGuess: state.newestGuess});
 const mapDispatchToProps = () => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(GuessCard);

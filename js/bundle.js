@@ -114,7 +114,6 @@
 	var Main = function Main(_ref) {
 	  var word = _ref.word;
 
-
 	  return _react2.default.createElement(
 	    _MuiThemeProvider2.default,
 	    null,
@@ -23885,29 +23884,30 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	   value: true
+	  value: true
 	});
 
 	var _constants = __webpack_require__(220);
 
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-	var initialState = { word: '', guesses: [], rhymes: [] };
+	var initialState = { word: '', guesses: [], rhymes: [], newestGuess: '' };
 
 	var reducer = function reducer() {
-	   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-	   var action = arguments[1];
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+	  var action = arguments[1];
 
-	   switch (action.type) {
-	      case _constants.NEW_WORD:
-	         return Object.assign({}, state, { word: action.word, rhymes: action.rhymes, guesses: [] });
-	      case _constants.ADD_GUESS:
-	         console.log("STATE.GUESSES", state.guesses);
-	         var totalGuesses = [].concat(_toConsumableArray(state.guesses), [action.guess]);
-	         return Object.assign({}, state, { guesses: totalGuesses });
-	      default:
-	         return state;
-	   }
+	  switch (action.type) {
+	    case _constants.NEW_WORD:
+	      return Object.assign({}, state, { word: action.word, rhymes: action.rhymes, guesses: [] });
+	    case _constants.ADD_GUESS:
+	      console.log("STATE.GUESSES", state.guesses);
+	      var totalGuesses = state.guesses;
+	      if (state.rhymes.includes(action.guess)) {
+	        totalGuesses.push(action.guess);
+	      }
+	      return Object.assign({}, state, { guesses: totalGuesses, newestGuess: action.guess });
+	    default:
+	      return state;
+	  }
 	};
 	exports.default = reducer;
 
@@ -24849,7 +24849,6 @@
 
 	  return function (dispatch, getState) {
 	    return _axios2.default.get('https://wordsapiv1.p.mashape.com/words/?random=true&soundsMax=4', options).then(function (response) {
-	      //dispatch(setWord(response.data.word))
 	      return _axios2.default.get('https://wordsapiv1.p.mashape.com/words/' + response.data.word + '/rhymes', options);
 	    }).then(function (response) {
 	      console.log(response.data);
@@ -39001,7 +39000,7 @@
 	};
 
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { rhymes: state.rhymes, guesses: state.guesses };
+	  return { rhymes: state.rhymes, guesses: state.guesses, newestGuess: state.newestGuess };
 	};
 	var mapDispatchToProps = function mapDispatchToProps() {
 	  return {};

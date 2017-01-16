@@ -19,7 +19,6 @@ export const fetchWord = () => {
   return function(dispatch, getState){
      return axios.get('https://wordsapiv1.p.mashape.com/words/?random=true&soundsMax=4', options)
      .then(response => {
-        //dispatch(setWord(response.data.word))
         return axios.get(`https://wordsapiv1.p.mashape.com/words/${response.data.word}/rhymes`, options)
      })
      .then(response => {

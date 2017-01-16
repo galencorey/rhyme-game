@@ -8,7 +8,6 @@ var injectTapEventPlugin = require("react-tap-event-plugin");
 injectTapEventPlugin();
 
 const Main = ({word}) => {
-
     return (
       <MuiThemeProvider>
         <div>
