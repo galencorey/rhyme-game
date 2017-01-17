@@ -5,7 +5,7 @@ const initialState = {word: '', guesses: [], rhymes: [], newestGuess: '', showAn
 const reducer = (state = initialState, action) => {
   switch (action.type) {
   case NEW_WORD:
-     return Object.assign({}, state, { word: action.word, rhymes: action.rhymes, guesses: [], showAnswers: false, answers: [] });
+     return Object.assign({}, state, { word: action.word, rhymes: action.rhymes, guesses: [], isShowAnswers: false, answers: [] });
   case ADD_GUESS:
       console.log("STATE.GUESSES", state.guesses)
       let totalGuesses = state.guesses;
@@ -15,7 +15,7 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, {guesses: totalGuesses, newestGuess: action.guess});
   case SEE_ANSWERS:
       const answers = state.rhymes.filter(rhyme => !state.guesses.includes(rhyme));
-      return Object.assign({}, state, {showAnswers: true, answers});
+      return Object.assign({}, state, {isShowAnswers: true, answers});
   default:
      return state;
   }

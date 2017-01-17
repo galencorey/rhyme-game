@@ -23897,7 +23897,7 @@
 
 	    switch (action.type) {
 	        case _constants.NEW_WORD:
-	            return Object.assign({}, state, { word: action.word, rhymes: action.rhymes, guesses: [], showAnswers: false, answers: [] });
+	            return Object.assign({}, state, { word: action.word, rhymes: action.rhymes, guesses: [], isShowAnswers: false, answers: [] });
 	        case _constants.ADD_GUESS:
 	            console.log("STATE.GUESSES", state.guesses);
 	            var totalGuesses = state.guesses;
@@ -23909,7 +23909,7 @@
 	            var answers = state.rhymes.filter(function (rhyme) {
 	                return !state.guesses.includes(rhyme);
 	            });
-	            return Object.assign({}, state, { showAnswers: true, answers: answers });
+	            return Object.assign({}, state, { isShowAnswers: true, answers: answers });
 	        default:
 	            return state;
 	    }
@@ -37441,7 +37441,8 @@
 
 	var RhymeGuesser = function RhymeGuesser(_ref) {
 	  var word = _ref.word,
-	      addGuess = _ref.addGuess;
+	      addGuess = _ref.addGuess,
+	      isShowAnswers = _ref.isShowAnswers;
 
 
 	  var enterText = function enterText(evt) {
@@ -37454,12 +37455,12 @@
 	  return _react2.default.createElement(
 	    'div',
 	    { style: _styles.centeredDiv },
-	    _react2.default.createElement(_TextField2.default, { hintText: 'enter a rhyme for ' + word, onKeyPress: enterText })
+	    _react2.default.createElement(_TextField2.default, { hintText: 'enter a rhyme for ' + word, onKeyPress: enterText, disabled: isShowAnswers })
 	  );
 	};
 
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { word: state.word };
+	  return { word: state.word, isShowAnswers: state.isShowAnswers };
 	};
 	var mapDispatchToProps = { addGuess: _actionCreators.addGuess };
 
@@ -39011,7 +39012,8 @@
 	  var rhymes = _ref.rhymes,
 	      guesses = _ref.guesses,
 	      answers = _ref.answers,
-	      seeAnswers = _ref.seeAnswers;
+	      seeAnswers = _ref.seeAnswers,
+	      isShowAnswers = _ref.isShowAnswers;
 
 
 	  return _react2.default.createElement(
@@ -39020,7 +39022,7 @@
 	    _react2.default.createElement(
 	      'div',
 	      { style: _styles.loneButton },
-	      _react2.default.createElement(_RaisedButton2.default, { label: 'see all', secondary: true, onClick: seeAnswers })
+	      _react2.default.createElement(_RaisedButton2.default, { label: 'see all', secondary: true, onClick: seeAnswers, disabled: isShowAnswers })
 	    ),
 	    _react2.default.createElement(
 	      _Card.Card,
@@ -39035,7 +39037,7 @@
 	          guess
 	        );
 	      }),
-	      seeAnswers ? answers.map(function (word, i) {
+	      isShowAnswers ? answers.map(function (word, i) {
 	        return _react2.default.createElement(
 	          _Chip2.default,
 	          { style: _styles.pinkInline, key: i },
@@ -39047,7 +39049,7 @@
 	};
 
 	var mapStateToProps = function mapStateToProps(state) {
-	  return { rhymes: state.rhymes, guesses: state.guesses, newestGuess: state.newestGuess, answers: state.answers };
+	  return { rhymes: state.rhymes, guesses: state.guesses, newestGuess: state.newestGuess, answers: state.answers, isShowAnswers: state.isShowAnswers };
 	};
 	var mapDispatchToProps = { seeAnswers: _actionCreators.seeAnswers };
 

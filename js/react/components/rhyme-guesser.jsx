@@ -6,7 +6,7 @@ import {addGuess} from '../../redux/action-creators';
 
 
 
-const RhymeGuesser = ({word, addGuess}) => {
+const RhymeGuesser = ({word, addGuess, isShowAnswers}) => {
 
   const enterText = (evt) => {
     if (evt.key === 'Enter'){
@@ -16,12 +16,12 @@ const RhymeGuesser = ({word, addGuess}) => {
   }
 
   return (<div style={centeredDiv}>
-            <TextField hintText={`enter a rhyme for ${word}`} onKeyPress={enterText} />
+            <TextField hintText={`enter a rhyme for ${word}`} onKeyPress={enterText} disabled={isShowAnswers} />
           </div>
           )
 }
 
-const mapStateToProps = (state) => ({word: state.word});
+const mapStateToProps = (state) => ({word: state.word, isShowAnswers: state.isShowAnswers});
 const mapDispatchToProps = {addGuess};
 
 export default connect(mapStateToProps, mapDispatchToProps)(RhymeGuesser);
