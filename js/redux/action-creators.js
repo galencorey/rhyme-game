@@ -2,6 +2,8 @@ import {NEW_WORD, ADD_GUESS, SEE_ANSWERS} from './constants';
 import axios from 'axios';
 // Development only:
 // import { wordsAPIKey } from '../../keys';
+// Production only:
+const wordsAPIKey = process.env.wordsAPIKey;
 
 export const setWord = (word, rhymes) => {
   return {type: NEW_WORD, word, rhymes};
