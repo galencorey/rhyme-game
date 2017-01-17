@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack -w"
+    "start": "nf start"
   },
   "author": "Galen Corey <galen.corey@gmail.com> (galencorey.com)",
   "license": "ISC",
@@ -15,6 +15,7 @@
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
+    "foreman": "2.0.0",
     "material-ui": "^0.16.6",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
