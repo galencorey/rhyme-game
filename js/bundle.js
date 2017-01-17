@@ -23897,7 +23897,7 @@
 
 	    switch (action.type) {
 	        case _constants.NEW_WORD:
-	            return Object.assign({}, state, { word: action.word, rhymes: action.rhymes, guesses: [], showAnswers: false });
+	            return Object.assign({}, state, { word: action.word, rhymes: action.rhymes, guesses: [], showAnswers: false, answers: [] });
 	        case _constants.ADD_GUESS:
 	            console.log("STATE.GUESSES", state.guesses);
 	            var totalGuesses = state.guesses;
@@ -24861,13 +24861,15 @@
 	    return _axios2.default.get('https://wordsapiv1.p.mashape.com/words/?random=true&soundsMax=4', options).then(function (response) {
 	      return _axios2.default.get('https://wordsapiv1.p.mashape.com/words/' + response.data.word + '/rhymes', options);
 	    }).then(function (response) {
-	      console.log(response.data);
 	      var rhymes = [];
 	      for (var type in response.data.rhymes) {
 	        rhymes = [].concat(_toConsumableArray(rhymes), _toConsumableArray(response.data.rhymes[type]));
 	      }
-	      console.log("RHYMES", rhymes);
-	      dispatch(setWord(response.data.word, rhymes));
+	      if (rhymes.length) {
+	        dispatch(setWord(response.data.word, rhymes));
+	      } else {
+	        dispatch(fetchWord());
+	      }
 	    }).catch(function (err) {
 	      return console.log(err);
 	    });

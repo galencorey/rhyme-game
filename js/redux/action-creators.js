@@ -26,13 +26,15 @@ export const fetchWord = () => {
         return axios.get(`https://wordsapiv1.p.mashape.com/words/${response.data.word}/rhymes`, options)
      })
      .then(response => {
-        console.log(response.data)
         let rhymes = [];
         for (let type in response.data.rhymes){
           rhymes = [...rhymes, ...response.data.rhymes[type]];
         }
-        console.log("RHYMES", rhymes)
-        dispatch(setWord(response.data.word, rhymes))
+        if (rhymes.length){
+          dispatch(setWord(response.data.word, rhymes))
+        } else {
+          dispatch(fetchWord());
+        }
      })
      .catch(err => console.log(err))
   }
