@@ -4,10 +4,6 @@ const axios = require('axios');
 
 const app = express()
 
-console.log("API key from server", process.env.wordsAPIKey)
-
-console.log("filepath", resolve(__dirname, 'index.html'))
-
 /*Statically serve js files, serve homepage by default */
 app.use(express.static('js'));
 app.get('/', (req, res) => res.sendFile(resolve(__dirname, 'index.html')))
@@ -37,7 +33,7 @@ const getWordWithRhymes = () => {
       if (!rhymes.length){
         return getWordWithRhymes()
       } else {
-        return [response.data.word, rhymes];
+        return {word: response.data.word, rhymes: rhymes};
       }
    })
    .catch(err => console.log(err))
