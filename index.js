@@ -1,0 +1,5 @@
+const express = require('express')
+const {resolve} = require('path')
+const app = express()
+app.listen('3001')
+.get('/*', (_, res) => res.sendFile(resolve(__dirname, 'index.html')))
