@@ -6493,7 +6493,8 @@
 	// import { wordsAPIKey } from '../../keys';
 	// Production only:
 	var wordsAPIKey = process.env.wordsAPIKey;
-	console.log(wordsAPIKey);
+	console.log("api key", wordsAPIKey);
+	console.log("env", process.env);
 
 	var setWord = exports.setWord = function setWord(word, rhymes) {
 	  return { type: _constants.NEW_WORD, word: word, rhymes: rhymes };

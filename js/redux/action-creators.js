@@ -4,7 +4,9 @@ import axios from 'axios';
 // import { wordsAPIKey } from '../../keys';
 // Production only:
 const wordsAPIKey = process.env.wordsAPIKey;
-console.log(wordsAPIKey);
+console.log("api key", wordsAPIKey);
+console.log("env", process.env);
+
 
 export const setWord = (word, rhymes) => {
   return {type: NEW_WORD, word, rhymes};
