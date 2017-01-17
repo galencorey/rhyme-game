@@ -1,15 +1,48 @@
-const express = require('express')
-const {resolve} = require('path')
+const express = require('express');
+const {resolve} = require('path');
+const axios = require('axios');
+
 const app = express()
 
 console.log("API key from server", process.env.wordsAPIKey)
 
 console.log("filepath", resolve(__dirname, 'index.html'))
 
+/*Statically serve js files, serve homepage by default */
 app.use(express.static('js'));
-app.get('/', (_, res) => res.sendFile(resolve(__dirname, 'index.html')))
-// app.get('/*', (_, res) => res.send("hello"))
+app.get('/', (req, res) => res.sendFile(resolve(__dirname, 'index.html')))
 
+/* New Words Route makes a request to words API*/
+app.get('/newword', (req, res) => {
+  return getWordWithRhymes()
+  .then(rhyme => res.send(rhyme))
+})
+
+/* This function will run as many times as it needs to to fetch a word with rhymes from words API */
+const getWordWithRhymes = () => {
+  const options = {headers: {
+      'X-Mashape-Key': process.env.wordsAPIKey,
+      'Accept': 'application/json'
+  }}
+
+  return axios.get('https://wordsapiv1.p.mashape.com/words/?random=true&soundsMax=4', options)
+   .then(response => {
+      return axios.get(`https://wordsapiv1.p.mashape.com/words/${response.data.word}/rhymes`, options)
+   })
+   .then(response => {
+      let rhymes = [];
+      for (let type in response.data.rhymes){
+        rhymes = [...rhymes, ...response.data.rhymes[type]];
+      }
+      if (!rhymes.length){
+        return getWordWithRhymes()
+      } else {
+        return [response.data.word, rhymes];
+      }
+   })
+   .catch(err => console.log(err))
+
+}
 
 
 app.listen(process.env.PORT || '3000')

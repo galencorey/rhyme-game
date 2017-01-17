@@ -26,7 +26,14 @@ export const fetchWord = () => {
       'Accept': 'application/json'
   }}
 
+  const herokuOptions ={
+    headers: {
+      "Accept": "application/vnd.heroku+json; version=3"
+    }
+  }
+
   return function(dispatch, getState){
+
      return axios.get('https://wordsapiv1.p.mashape.com/words/?random=true&soundsMax=4', options)
      .then(response => {
         return axios.get(`https://wordsapiv1.p.mashape.com/words/${response.data.word}/rhymes`, options)
@@ -45,3 +52,4 @@ export const fetchWord = () => {
      .catch(err => console.log(err))
   }
 }
+
