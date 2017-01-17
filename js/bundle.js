@@ -24833,11 +24833,12 @@
 
 	var _axios2 = _interopRequireDefault(_axios);
 
-	var _keys = __webpack_require__(254);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+	// Development only:
+	// import { wordsAPIKey } from '../../keys';
 
 	var setWord = exports.setWord = function setWord(word, rhymes) {
 	  return { type: _constants.NEW_WORD, word: word, rhymes: rhymes };
@@ -24853,7 +24854,7 @@
 
 	var fetchWord = exports.fetchWord = function fetchWord() {
 	  var options = { headers: {
-	      'X-Mashape-Key': _keys.wordsAPIKey,
+	      'X-Mashape-Key': wordsAPIKey,
 	      'Accept': 'application/json'
 	    } };
 
@@ -26366,17 +26367,7 @@
 
 
 /***/ },
-/* 254 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var wordsAPIKey = exports.wordsAPIKey = '7Mbjb7T3qxmshMvwCdK99wp9AEjVp1OsNPWjsnjZdtE6RqhqCT';
-
-/***/ },
+/* 254 */,
 /* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
