@@ -1,5 +1,13 @@
 const express = require('express')
 const {resolve} = require('path')
 const app = express()
-app.listen('3001')
-app.get('/*', (_, res) => res.sendFile(resolve(__dirname, 'index.html')))
+
+console.log("filepath", resolve(__dirname, 'index.html'))
+
+app.use(express.static('js'));
+app.get('/', (_, res) => res.sendFile(resolve(__dirname, 'index.html')))
+// app.get('/*', (_, res) => res.send("hello"))
+
+
+
+app.listen(process.env.PORT || '3000')
