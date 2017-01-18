@@ -7,7 +7,6 @@ const reducer = (state = initialState, action) => {
   case NEW_WORD:
      return Object.assign({}, state, { word: action.word, rhymes: action.rhymes, guesses: [], isShowAnswers: false, answers: [] });
   case ADD_GUESS:
-      console.log("STATE.GUESSES", state.guesses)
       let totalGuesses = state.guesses;
       if (state.rhymes.includes(action.guess)){
         totalGuesses.push(action.guess);

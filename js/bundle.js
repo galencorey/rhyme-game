@@ -23899,7 +23899,6 @@
 	        case _constants.NEW_WORD:
 	            return Object.assign({}, state, { word: action.word, rhymes: action.rhymes, guesses: [], isShowAnswers: false, answers: [] });
 	        case _constants.ADD_GUESS:
-	            console.log("STATE.GUESSES", state.guesses);
 	            var totalGuesses = state.guesses;
 	            if (state.rhymes.includes(action.guess)) {
 	                totalGuesses.push(action.guess);
