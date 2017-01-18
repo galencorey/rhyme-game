@@ -6500,9 +6500,10 @@
 	};
 
 	var fetchWord = exports.fetchWord = function fetchWord() {
-
+	  console.log("abt to fetch a word");
 	  return function (dispatch, getState) {
 	    return _axios2.default.get('/newword').then(function (response) {
+	      console.log("got this nice response", response.data);
 	      dispatch(setWord(response.data.word, response.data.rhymes));
 	    }).catch(function (err) {
 	      return console.log(err);

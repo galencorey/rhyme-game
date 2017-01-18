@@ -14,10 +14,11 @@ export const seeAnswers = () => {
 }
 
 export const fetchWord = () => {
-
+  console.log("abt to fetch a word")
   return function(dispatch, getState){
      return axios.get('/newword')
      .then(response => {
+        console.log("got this nice response", response.data)
         dispatch(setWord(response.data.word, response.data.rhymes))
      })
      .catch(err => console.log(err))

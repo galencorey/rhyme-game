@@ -30,6 +30,7 @@ const getWordWithRhymes = () => {
       for (let type in response.data.rhymes){
         rhymes = [...rhymes, ...response.data.rhymes[type]];
       }
+      console.log("got some rhymes", rhymes)
       if (!rhymes.length){
         return getWordWithRhymes()
       } else {
