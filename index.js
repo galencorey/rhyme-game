@@ -10,7 +10,6 @@ app.get('/', (req, res) => res.sendFile(resolve(__dirname, 'index.html')))
 
 /* New Words Route makes a request to words API*/
 app.get('/newword', (req, res) => {
-  console.log("I HAVE HIT THE ROUTE")
   return getWordWithRhymes()
   .then(rhyme => res.send(rhyme))
 })
@@ -31,7 +30,6 @@ const getWordWithRhymes = () => {
       for (let type in response.data.rhymes){
         rhymes = [...rhymes, ...response.data.rhymes[type]];
       }
-      console.log("got some rhymes", rhymes)
       if (!rhymes.length){
         return getWordWithRhymes()
       } else {
